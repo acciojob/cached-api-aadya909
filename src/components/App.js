@@ -8,18 +8,17 @@ const PostList = () => {
 
   // Fetch all posts once
   useEffect(() => {
-    const fetchPosts = async () => {
-      setLoading(true);
-      try {
-        const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const data = await res.json();
-        setPosts(data);
-      } catch (error) {
-        console.error('Failed to fetch posts:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+ useEffect(() => {
+  setLoading(true);
+  fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(res => res.json())
+    .then(data => {
+      setPosts(data);
+    })
+    .catch(error => console.error('Fetch error:', error))
+    .finally(() => setLoading(false));
+}, []);
+
 
     fetchPosts();
   }, []); // Only run on mount
